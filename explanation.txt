@@ -1,0 +1,4 @@
+Explanation:
+Roguelike: actually titled YROC (Youthful Ranges of Certainty)
+A Roguelike in the footsteps of ADOM (Ancient Domains of Mystery),
+written in JAVA, using object-oriented methodology.
