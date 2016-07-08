@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import roguelike.event.CombatEvent;
 
 public class Monster extends Entity {
-	private String name;
 	private MonsterStats stats;
 	private Color color;
 	private Cell cell;
@@ -37,7 +37,7 @@ public class Monster extends Entity {
 		//choose a random monster from the DB
 	}
 	
-	public boolean addToCell(Cell cell1) {
+	public boolean addToCell(Cell cell1) throws CombatEvent {
 		if(cell1 == null) {
 			logger.debug("Cannot add a Monster to a null Cell.");
 			return false;
@@ -90,6 +90,6 @@ public class Monster extends Entity {
 	}
 	
 	public String toString() {
-		return name;
+		return this.name;
 	}
 }

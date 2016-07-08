@@ -6,23 +6,27 @@ package roguelike;
 public class RectArea extends Area
 {
 
-	public RectArea(int i, int j, int k, int l, int i1) {
-		type = i1;
-		x = i;
-		y = j;
-		height = k;
-		width = l;
+	public RectArea(int xpos, int ypos, int wd, int ht, AreaType t) {
+		type = t;
+		x = xpos;
+		y = ypos;
+		height = ht;
+		width = wd;
 	}
 
-	public boolean contains(int i, int j) {
-		return i > x && j > y && i <= x + height && j <= y + width;
+	public RectArea(int xpos, int ypos, int wd, int ht, int type) {
+		this(xpos, ypos, wd, ht, Area.getType(type));
 	}
 
-	public int getType() {
+	public boolean contains(int xpos, int ypos) {
+		return xpos > x && ypos > y && xpos <= x + height && ypos <= y + width;
+	}
+
+	public AreaType getType() {
 		return type;
 	}
 
-	private int type;
+	private AreaType type;
 	private int x;
 	private int y;
 	private int height;

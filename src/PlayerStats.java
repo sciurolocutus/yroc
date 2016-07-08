@@ -22,6 +22,10 @@ public class PlayerStats {
 		if(hp > maxhp)
 			hp = maxhp;
 	}
+	
+	public int getHP() { return this.hp; }
+	public int getStr() { return this.str; }
+	public int getDex() { return this.dex; }
 
 	public String getString() {
 		return (new StringBuilder()).append("HP: ").append(hp).append("/").append(maxhp).append("    MP: ").append(mp).append("/").append(maxmp).append("    STR: ").append(str).append("    DEX: ").append(dex).toString();

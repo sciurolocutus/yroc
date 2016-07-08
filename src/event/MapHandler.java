@@ -22,7 +22,8 @@ public class MapHandler extends ActionHandler {
 		map = game1.currentMap();
 	}
 
-	public void handleEvent(KeyEvent keyevent) {
+	//TODO: Optional - throw CombatEvent and catch it somewhere else top-level
+	public void handleEvent(KeyEvent keyevent){
 		Player player = game.getPlayer();
 		Cell cell = player.getCell();
 		byte horiz = 0;
@@ -68,14 +69,27 @@ public class MapHandler extends ActionHandler {
 		}
 		
 		if(horiz != 0 || vert != 0) {
-			boolean flag = player.addToCell(map.get(cell.getX() + horiz, cell.getY() - vert));
-			if(flag) {
-				logger.debug((new StringBuilder()).append("Player moved to ").append(player.getCell()).toString());
-			} else {
-				logger.debug((new StringBuilder()).append("Player did not move to ").append(map.get(cell.getX() + horiz, cell.getY() - vert)).toString());
-				logger.info("Ouch.  You bump your head.");
+			boolean moved=false;
+			boolean combat=false;
+			try {
+				moved = player.addToCell(map.get(cell.getX() + horiz, cell.getY() - vert));
+			} catch(CombatEvent ce) {
+				//handle combat here!
+				logger.info(ce.getMessage());
+				Combat.handleCombat(ce);
+				moved=false;
+				combat=true;
+			} finally {
+				if(moved) {
+					logger.debug((new StringBuilder()).append("Player moved to ").append(player.getCell()).toString());
+				} else {
+					logger.debug((new StringBuilder()).append("Player did not move to ").append(map.get(cell.getX() + horiz, cell.getY() - vert)).toString());
+					if(!combat) {
+						logger.info("Ouch.  You bump your head.");
+					}
+				}
+				game.getScreen().update();
 			}
-			game.getScreen().update();
 		}
 	}
 }

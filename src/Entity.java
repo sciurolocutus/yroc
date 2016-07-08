@@ -11,7 +11,7 @@ public abstract class Entity implements Displayable {
 	}
 
 	public void setName(String s) {
-		name = s;
+		this.name = s;
 	}
 
 	public abstract boolean isAlive();
@@ -19,6 +19,10 @@ public abstract class Entity implements Displayable {
 	public abstract String getChar();
 
 	public abstract Color getColor();
+	
+	public String getName() {
+		return this.name;
+	}
 
-	private String name;
+	protected String name;
 }

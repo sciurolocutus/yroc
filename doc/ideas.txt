@@ -1,0 +1,40 @@
+Ideas:
+
+in a map, have it be eroded algorithmically
+
+____#____
+__###___
+__####__
+___###___
+_____##__
+______#___
+
+such that a similar type of "smoothed" (up to aliasing) island appears
+in each [area] interval.
+
+__#____#____#__
+_____#____#_____
+_#______#____#__
+____#______#_____
+etc.
+
+------------------
+Monsters:
+N-pede:
+Ccccccc or Ppppppp
+has a head, and subsequent body portions.
+Only head can attack?
+When the description is read, it is an N-pede, where
+N is the number of segments it has left.
+e.g. Ccccc is a pentapede, Ccccccccccc is a hendecapede.
+Cr (or Cl or the like) is a sesquipod (1.5ft or 18 inches).
+
+Only the head can direct movement, and, like in Nibbles,
+it can't move again if it runs into a trap (head is surrounded by walls or itself).
+The AI should try to avoid this.  It does have the option
+of standing still, unlike in Nibbles, and running into the wall or itself
+doesn't actually kill it.
+
+Like in Centipede, if a non-head section is killed,
+the following tail  becomes another N-minus-M-pede (ha)
+and the head section is reduced to an M-minus-N-minus-1-pede (ha).

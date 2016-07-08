@@ -5,8 +5,8 @@ package roguelike;
 
 public class EllipticalArea extends Area {
 
-	public EllipticalArea(int i, int j, int k, int l, int i1) {
-		type = i1;
+	public EllipticalArea(int i, int j, int k, int l, AreaType t) {
+		type = t;
 		a = k;
 		b = l;
 		x = i;
@@ -17,11 +17,11 @@ public class EllipticalArea extends Area {
 		return (i - x) * (i - x) * b * b + (j - y) * (j - y) * a * a <= a * a * b * b;
 	}
 
-	public int getType() {
+	public AreaType getType() {
 		return type;
 	}
 
-	private int type;
+	private AreaType type;
 	private int x;
 	private int y;
 	private int a;

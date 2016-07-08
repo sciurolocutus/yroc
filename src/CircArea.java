@@ -5,8 +5,8 @@ package roguelike;
 
 public class CircArea extends Area {
 
-	public CircArea(int i, int j, int k, int l) {
-		type = l;
+	public CircArea(int i, int j, int k, AreaType t) {
+		type = t;
 		x = i;
 		y = j;
 		rad = k;
@@ -16,11 +16,11 @@ public class CircArea extends Area {
 		return (i - x) * (i - x) + (j - y) * (j - y) < rad * rad;
 	}
 
-	public int getType() {
+	public AreaType getType() {
 		return type;
 	}
 
-	private int type;
+	private AreaType type;
 	private int x;
 	private int y;
 	private int rad;

@@ -6,17 +6,17 @@ package roguelike;
 public class MapArea extends Area
 {
 
-	public MapArea(int i) {
-		type = i;
+	public MapArea(AreaType t) {
+		type = t;
 	}
 
 	public boolean contains(int i, int j) {
 		return true;
 	}
 
-	public int getType() {
+	public AreaType getType() {
 		return type;
 	}
 
-	private int type;
+	private AreaType type;
 }

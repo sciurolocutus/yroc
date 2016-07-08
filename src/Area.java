@@ -6,8 +6,17 @@ public abstract class Area {
 
 	public abstract boolean contains(int i, int j);
 
-	public abstract int getType();
+	public abstract AreaType getType();
 
-	public static final int room = 1;
-	public static final int effect_area = 2;
+	public static AreaType getType(int t) {
+		if(t % 2 == 0) {
+			return AreaType.ROOM;
+		} else {
+			return AreaType.EFFECT_AREA;
+		}
+	}
+	
+	protected enum AreaType {
+		ROOM, EFFECT_AREA
+	}
 }

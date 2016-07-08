@@ -15,21 +15,21 @@ public class Map {
 	private int width;
 	private int height;
 	
-	public Map(int i, int j) {
-		width = i;
-		height = j;
-		cols = new ArrayList<ArrayList<Cell>>(i);
-		for(int k = 0; k < i; k++) {
-			cols.add(new ArrayList<Cell>(j));
+	public Map(int w, int h) {
+		width = w;
+		height = h;
+		cols = new ArrayList<ArrayList<Cell>>(w);
+		for(int i = 0; i < w; i++) {
+			cols.add(new ArrayList<Cell>(h));
 			
 		}
 
 		areas = new ArrayList<Area>();
 	}
 
-	public Cell get(int i, int j) {
-		if(i > -1 && j > -1 && i < width && j < height) {
-			return (cols.get(i)).get(j);
+	public Cell get(int x, int y) {
+		if(x > -1 && y > -1 && x < width && y < height) {
+			return (cols.get(x)).get(y);
 		} else {
 			//System.err.println((new StringBuilder()).append("(").append(i).append(", ").append(j).append(") out of bounds.").toString());
 			return null;
@@ -37,10 +37,10 @@ public class Map {
 	}
 
 	/*
-	* Generate a dungeon 
+	* Generate a dungeon in the most arbitrary, random way possible.
 	*/
-	public void generateRandumbDungeon(long i) {
-		Random random = new Random(i);
+	public void generateRandumbDungeon(long seed) {
+		Random random = new Random(seed);
 		for(int j = 0; j < width; j++) {
 			(cols.get(j)).clear();
 			Cell c;
@@ -73,17 +73,18 @@ public class Map {
 		}
 	}
 
-	public void generateDungeonRespectingAreas(long i) {
-		Random random = new Random(i);
+	public void generateDungeonRespectingAreas(long seed) {
+		Random random = new Random(seed);
 		for(int j = 0; j < width; j++) {
 			((ArrayList)cols.get(j)).clear();
 			for(int k = 0; k < height; k++) {
 				Area area = isInArea(j, k);
 				Cell cell;
-				if(area != null)
-					cell = new Cell(area.getType(), j, k);
-				else
+				if(area != null) {
+					cell = new Cell(Cell.Celltype.STONEFLOOR, j, k);
+				} else {
 					cell = new Cell(random.nextInt(2) + 1, j, k);
+				}
 				(cols.get(j)).add(cell);
 			}
 		}
@@ -95,16 +96,16 @@ public class Map {
 		generateDungeonRespectingAreas((int)System.currentTimeMillis());
 	}
 
-	public void generateDungeonWithAreas(long i) {
-		Random random = new Random(i);
-		generateAreas(i);
+	public void generateDungeonWithAreas(long seed) {
+		Random random = new Random(seed);
+		generateAreas(seed);
 		for(int j = 0; j < width; j++) {
 			((ArrayList)cols.get(j)).clear();
 			for(int k = 0; k < height; k++) {
 				Area area = isInArea(j, k);
 				Cell cell;
 				if(area != null)
-					cell = new Cell(area.getType(), j, k);
+					cell = new Cell(Cell.Celltype.STONEFLOOR, j, k);
 				else
 					cell = new Cell(random.nextInt(2) + 1, j, k);
 				(cols.get(j)).add(cell);
@@ -118,27 +119,29 @@ public class Map {
 		generateDungeonWithAreas((int)System.currentTimeMillis());
 	}
 
-	public void generateDungeonUsingOnlyAreas(int i) {
+	public void generateDungeonUsingOnlyAreas(int seed) {
+		Random random = new Random(seed);
 		for(int j = 0; j < width; j++) {
 			((ArrayList)cols.get(j)).clear();
 			for(int k = 0; k < height; k++) {
 				Area area = isInArea(j, k);
 				Cell cell;
-				if(area != null)
-					cell = new Cell(area.getType(), j, k);
-				else
-					cell = new Cell(i, j, k);
+				if(area != null) {
+					cell = new Cell(Cell.Celltype.STONEFLOOR, j, k);
+				} else {
+					cell = new Cell(Cell.getType(random.nextInt(2)), j, k);
+				}
 				(cols.get(j)).add(cell);
 			}
 		}
 		addNeighbors();
 	}
 
-	public void generateAreas(long i) {
-		Random random = new Random(i);
-		int j = random.nextInt(6) + 3;
+	public void generateAreas(long seed) {
+		Random random = new Random(seed);
+		int numAreas = random.nextInt(6) + 3;
 		areas.clear();
-		for(int k = 0; k < j; k++)
+		for(int i = 0; i < numAreas; i++)
 			areas.add(new RectArea(random.nextInt(width), random.nextInt(height), random.nextInt(7) + 3, random.nextInt(7) + 3, random.nextInt(1) + 1));
 
 	}
@@ -151,23 +154,29 @@ public class Map {
 		areas.add(area);
 	}
 
-	private Area isInArea(int i, int j) {
-		for(int k = 0; k < areas.size(); k++)
-			if(((Area)areas.get(k)).contains(i, j))
+	//Returns the first Area containing the Cell (x,y), or null if none was found.
+	private Area isInArea(int x, int y) {
+		for(int k = 0; k < areas.size(); k++) {
+			if(((Area)areas.get(k)).contains(x, y)) {
 				return (Area)areas.get(k);
+			}
+		}
 
 		return null;
 	}
 
-	private ArrayList<Area> getAreas(int i, int j) {
+	//Return a list of areas that a given Cell(x,y) belongs to
+	private ArrayList<Area> getAreas(int x, int y) {
 		ArrayList<Area> arraylist = new ArrayList<Area>();
 		for(int k = 0; k < areas.size(); k++)
-			if((areas.get(k)).contains(i, j))
+			if((areas.get(k)).contains(x, y))
 				arraylist.add(areas.get(k));
 
 		return arraylist;
 	}
 
+	//Draw each cell to the screen; each cell has a color and a char (String) to represent it.
+	//The color and string will be based on its topmost contents.
 	public void display(Graphics g) {
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
@@ -176,9 +185,12 @@ public class Map {
 			}
 
 		}
-
 	}
 
+	//Draw each cell which has changed since the last draw.
+	//This allows for more efficient (and less flashy) drawing to screens when
+	//only a small portion of the Cells actually changed (due to
+	// player or monster movement, or other game events).
 	public void update(Graphics g) {
 		for(int i = 0; i < width; i++) {
 			for(int j = 0; j < height; j++) {
@@ -196,10 +208,11 @@ public class Map {
 
 	}
 
+	//The width of the current map
 	public int getWidth() {
 		return width;
 	}
-
+	//The height of the current map
 	public int getHeight() {
 		return height;
 	}
