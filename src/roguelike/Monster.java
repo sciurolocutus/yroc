@@ -1,7 +1,6 @@
 package roguelike;
 
 import java.awt.Color;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
