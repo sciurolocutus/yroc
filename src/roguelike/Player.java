@@ -2,9 +2,13 @@ package roguelike;
 
 import java.awt.Color;
 import java.io.PrintStream;
+
+import org.apache.logging.log4j.LogManager;
 import roguelike.event.CombatEvent;
 
 import org.apache.log4j.Logger;
+
+import static org.apache.logging.log4j.LogManager.*;
 
 // Referenced classes of package roguelike:
 //            Entity, PlayerStats, Cell
@@ -14,7 +18,7 @@ public class Player extends Entity implements CanDefend, CanAttack {
 	private Color color;
 	private Cell cell;
 	
-	static Logger logger = Logger.getLogger(Player.class);
+	static org.apache.logging.log4j.Logger logger = LogManager.getLogger(Player.class);
 
 	public Player() {
 		this("Enk", Color.red, 10, 10, 12, 12);

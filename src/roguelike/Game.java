@@ -18,7 +18,6 @@ public class Game
 
 	private Map m;
 	private Player p;
-	private HashMap<java.lang.String, Map> maps;
 	private Screen sc;
 	private InputArbitrator arb;
 	
@@ -35,7 +34,7 @@ public class Game
 		m = new Map(26, 33);
 		m.generateAreas(i);
 		m.generateDungeonRespectingAreas(i);
-		maps = new HashMap<java.lang.String, Map>();
+		HashMap<String, Map> maps = new HashMap<String, Map>();
 		maps.put("start", m);
 		
 		//need this try-catch clause, since addToCell could throw a CombatEvent

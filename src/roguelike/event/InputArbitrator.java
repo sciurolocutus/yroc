@@ -10,9 +10,7 @@ import roguelike.Game;
 public class InputArbitrator implements KeyListener {
 
 	public InputArbitrator(Game game1) {
-		game = game1;
-		mh = new MapHandler(game1);
-		handler = mh;
+		this.handler = new MapHandler(game1);
 	}
 
 	protected void setHandler(ActionHandler actionhandler) {
@@ -31,6 +29,4 @@ public class InputArbitrator implements KeyListener {
 
 	private ActionHandler handler;
 	private static InputArbitrator theInstance;
-	private MapHandler mh;
-	private Game game;
 }

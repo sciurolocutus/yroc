@@ -2,6 +2,8 @@ package roguelike.event;
 
 import java.awt.event.KeyEvent;
 import java.io.PrintStream;
+
+import org.apache.logging.log4j.LogManager;
 import roguelike.*;
 import roguelike.graphics.Screen;
 
@@ -15,7 +17,7 @@ public class MapHandler extends ActionHandler {
 
 	private Game game;
 	private Map map;
-	static Logger logger = Logger.getLogger(MapHandler.class);
+	static org.apache.logging.log4j.Logger logger = LogManager.getLogger(MapHandler.class);
 	
 	public MapHandler(Game game1) {
 		game = game1;

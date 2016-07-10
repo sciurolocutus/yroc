@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import roguelike.event.CombatEvent;
 
 public class Monster extends Entity {
@@ -13,7 +14,7 @@ public class Monster extends Entity {
 	private Color color;
 	private Cell cell;
 	
-	static Logger logger = Logger.getLogger(Monster.class);
+	static org.apache.logging.log4j.Logger logger = LogManager.getLogger(Monster.class);
 	
 	public Monster() {
 		this("Goblin", Color.blue, 10, 12, 10, 10);

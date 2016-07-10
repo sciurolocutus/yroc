@@ -1,5 +1,8 @@
 *.class
 
+#This project used to be managed in svn.
+.svn
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

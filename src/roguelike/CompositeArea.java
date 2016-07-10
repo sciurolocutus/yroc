@@ -9,12 +9,11 @@ public class CompositeArea extends Area {
 	private ArrayList<Area> components;
 	private AreaType type;
 	private int x;	//upper-left X coord
-	private int y;	//upper-left Y coord
 
 	public CompositeArea(int xpos, int ypos, AreaType t) {
 		this.type = t;
 		this.x = xpos;
-		this.y = ypos;
+		int y = ypos;
 		this.components = new ArrayList<Area>();
 	}
 
